@@ -1,0 +1,23 @@
+@import url(./root.css);
+
+.authButtonsContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.signInButton {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    width: 290px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--whiteColor);
+    color: var(--blackColor);
+}
