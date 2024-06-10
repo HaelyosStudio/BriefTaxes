@@ -10,6 +10,9 @@
 
 @import url(navbar.css);
 @import url(authButtons.css);
+@import url(loginStyle.css);
+@import url(registerStyle.css);
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -39,6 +42,11 @@ body {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
+.innerShadow {
+  -webkit-box-shadow: inset 0px 4px 16px -5px #6A6A6A; 
+  box-shadow: inset 0px 4px 16px -5px #6A6A6A;
+}
+
 .mainContentContainer {
   background-color: var(--whiteColor);
   width: 100dvw;
@@ -52,4 +60,8 @@ body {
 
 .black {
   color: black;
+}
+
+.errorMessage {
+  color: var(--dangerColor);
 }

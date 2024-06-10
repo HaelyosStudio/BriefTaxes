@@ -1,0 +1,60 @@
+@import url(./root.css);
+
+.loginFormMainContainer {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: var(--blackColor);
+
+    .loginFormTitle {
+        width: 100%;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .loginFormContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        padding: 30px;
+        border-radius: 10px;
+
+        .loginEmailBox {
+
+
+            .loginEmailLabel {
+
+            }
+        }
+
+        .loginPasswordBox {
+
+            .loginPasswordLabel {
+    
+            }
+        }
+    
+        .loginField {
+            width: 260px;
+            height: 40px;
+            border-radius: 5px;
+            padding-left: 15px;
+            margin-bottom: 10px;
+            background-color: var(--greyColor);
+        }
+
+        .loginSubmitButton {
+            width: 100px;
+            height: 40px;
+            background-color: var(--lightMainColor);
+            color: var(--whiteColor);
+            border-radius: 5px;
+        }
+    }
+}

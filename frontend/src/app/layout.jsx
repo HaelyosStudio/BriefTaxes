@@ -1,7 +1,6 @@
 import React from 'react';
-import './globals.css';
 import Navbar from '../components/navbar';
-import MainContent from '../components/mainContent';
+import './globals.css';
 import '../app/fontawesome.js';
 
 export const metadata = {

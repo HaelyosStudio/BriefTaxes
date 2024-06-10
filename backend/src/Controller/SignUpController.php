@@ -42,7 +42,6 @@ class SignUpController extends AbstractController
         $userPassword = $requestContent['password'];
         $userAddress = $requestContent['address'];
         $userPhoneNumber = $requestContent['phoneNumber'];
-        $userRoles = $requestContent['roles'];
         $userRepository = $this->entityManager->getRepository(User::class);
         $registeredUser = $userRepository->findOneBy(['email' => $userEmail]);
         // Si l'utilisateur est déjà enregistré renvoie une erreur.
@@ -59,7 +58,7 @@ class SignUpController extends AbstractController
         );
         $newUser->setAddress($userAddress);
         $newUser->setPhoneNumber($userPhoneNumber);
-        $newUser->setRoles($userRoles);
+        $newUser->setRoles(["ROLE_USER"]);
         $this->entityManager->persist($newUser);
         $this->entityManager->flush();
         return new Response('OK', 200);
