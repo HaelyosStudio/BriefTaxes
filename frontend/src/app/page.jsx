@@ -1,13 +1,14 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
 
-const HomePage = () => {
+const App = () => {
   return (
-    <div>
-      <h1>Welcome to My Next.js App</h1>
-      <p>This is the home page.</p>
+    <div className="authButtonsContainer">
+        <Link className='signInButton outerShadow' href="/login">Login</Link>
+        <Link className='signInButton outerShadow' href="/register">Register</Link>
     </div>
   );
 };
 
-export default HomePage;
+export default App;

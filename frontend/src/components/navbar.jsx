@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouseChimney } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
+const token = localStorage.getItem("token");
+
 export default function Navbar() {
     return (
         <div className="mainHeaderContainer">
@@ -10,10 +12,13 @@ export default function Navbar() {
                 <div className="navBarLeftBox">
                 <span className="profilePicture">
                 </span>
+                if (token) {
+                    
+                }
                 <span className="statusText">Disconnected</span>
                 </div>
                 <div className="navBarRightBox outerShadow">
-                    <Link href="/authentication" className="navOptions">
+                    <Link href="/" className="navOptions">
                         <FontAwesomeIcon className="icons" icon="fa-solid fa-house-chimney" />
                         <span className="navOptionsText">Home</span>
                     </Link>

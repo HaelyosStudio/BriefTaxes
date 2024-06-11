@@ -65,3 +65,7 @@ body {
 .errorMessage {
   color: var(--dangerColor);
 }
+
+.errorMessage {
+  color: var(--mediumMainColor);
+}

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [firstname, setFirstName] = useState("");
@@ -18,18 +19,14 @@ export default function Register() {
   const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] =
     useState("");
   const [generalErrorMessage, setGeneralErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+
+  const router = useRouter();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setFirstNameErrorMessage("");
-    setLastNameErrorMessage("");
-    setEmailErrorMessage("");
-    setPhoneNumberErrorMessage("");
-    setAddressErrorMessage("");
-    setPasswordErrorMessage("");
-    setConfirmPasswordErrorMessage("");
-    setGeneralErrorMessage("");
 
     if (password !== confirmPassword) {
       setConfirmPasswordErrorMessage("Passwords do not match");
@@ -40,7 +37,7 @@ export default function Register() {
       const response = await fetch("http://127.0.0.1:8000/api/users", {
         method: "POST",
         headers: {
-            "Content-Type": "application/ld+json",
+          "Content-Type": "application/ld+json",
         },
         body: JSON.stringify({
           firstname,
@@ -54,6 +51,12 @@ export default function Register() {
 
       if (response.status === 200) {
         setGeneralErrorMessage("Registration successful! Please login.");
+        setTimeout(
+          function () {
+            router.push("/login");
+          }.bind(this),
+          1500
+        );
       } else {
         const errorData = await response.json();
         setGeneralErrorMessage(
@@ -212,6 +215,9 @@ export default function Register() {
 
         {generalErrorMessage && (
           <p className="errorMessage">{generalErrorMessage}</p>
+        )}
+        {successMessage && (
+          <p className="successMessage">{successMessage}</p>
         )}
 
         <button className="registerSubmitButton" type="submit">

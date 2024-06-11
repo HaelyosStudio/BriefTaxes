@@ -1,34 +1,44 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setEmail] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [password, setPassword] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [generalErrorMessage, setGeneralErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setEmailErrorMessage("");
-    setPasswordErrorMessage("");
-    setGeneralErrorMessage("");
-
     try {
-      const response = await axios.post("/api/login_check", {
-        email,
-        password,
+      const response = await fetch("http://127.0.0.1:8000/api/login_check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/ld+json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       });
 
       if (response.status === 200) {
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        const decoded = jwt_decode(token);
-        console.log(decoded);
-        window.location.href = "/dashboard";
+        const data = await response.json();
+        const token = data.token;
+        if (token) {
+          setTimeout(
+            function () {
+              localStorage.setItem("token", token);
+              router.push("/");
+            }.bind(this),
+            1500
+          );
+        } 
       } else {
         const errorData = response.data;
         setGeneralErrorMessage(
@@ -48,11 +58,11 @@ export default function Login() {
           });
         } else {
           setGeneralErrorMessage(
-            errorData.message || "Wrong email. Please try again."
+            errorData.message || "Wrong email or password. Please try again."
           );
         }
       } else {
-        setGeneralErrorMessage("Email or password incorrect. Please try again.");
+        setSuccessMessage("Login successful. Redirection in a few seconds.");
       }
     }
   };
@@ -68,7 +78,7 @@ export default function Login() {
           <input
             className="loginField innerShadow"
             type="email"
-            value={email}
+            value={username}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -93,9 +103,9 @@ export default function Login() {
           )}
         </div>
 
-        {generalErrorMessage && (
-          <p className="errorMessage">{generalErrorMessage}</p>
-        )}
+        {successMessage && <p className="successMessage">{successMessage}</p>}
+        {generalErrorMessage && <p className="errorMessage">{generalErrorMessage}</p>}
+
 
         <button className="loginSubmitButton" type="submit">
           Login
