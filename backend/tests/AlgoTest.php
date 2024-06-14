@@ -61,7 +61,9 @@ function validatePaymentInfo($cardNumber, $expirationDate) {
 }
 
 $validRegulationNumber = "KW2024_22_78";
-$invalidRegulationNumber = "ZA2024_22_78";
+$invalidRegulationNumberLetters = "ZA2024_22_78";
+$invalidRegulationNumberTotal100 = "ZA2024_22_55";
+$invalidRegulationNumberDate = "ZA2023_22_78";
 
 $validCardNumber = "4532015112830366";
 $invalidCardNumber = "4532015112830365";
@@ -69,7 +71,9 @@ $validExpirationDate = "12/24";
 $invalidExpirationDate = "11/22";
 
 echo "Valid regulation number ($validRegulationNumber): " . (validateRegulationNumber($validRegulationNumber) ? 'True' : 'False') . "\n";
-echo "Invalid regulation number ($invalidRegulationNumber): " . (validateRegulationNumber($invalidRegulationNumber) ? 'True' : 'False') . "\n";
+echo "Invalid regulation number Letters ($invalidRegulationNumberLetters): " . (validateRegulationNumber($invalidRegulationNumberLetters) ? 'True' : 'False') . "\n";
+echo "Invalid regulation number Total equal 100 ($invalidRegulationNumberTotal100): " . (validateRegulationNumber($invalidRegulationNumberTotal100) ? 'True' : 'False') . "\n";
+echo "Invalid regulation number Date ($invalidRegulationNumberDate): " . (validateRegulationNumber($invalidRegulationNumberDate) ? 'True' : 'False') . "\n";
 
 echo "Valid card numbers ($validCardNumber, $validExpirationDate): " . (validatePaymentInfo($validCardNumber, $validExpirationDate) ? 'True' : 'False') . "\n";
 echo "Valid expiration + Invalid card number ($invalidCardNumber, $validExpirationDate): " . (validatePaymentInfo($invalidCardNumber, $validExpirationDate) ? 'True' : 'False') . "\n";

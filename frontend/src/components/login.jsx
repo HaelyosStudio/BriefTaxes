@@ -12,6 +12,34 @@ export default function Login() {
 
   const router = useRouter();
 
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setGeneralErrorMessage("");
+
+    if (!isValidEmail(emailValue)) {
+      setEmailErrorMessage("Please enter a valid email address.");
+    } else {
+      setEmailErrorMessage("");
+    }
+  };
+
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handlePasswordChange = (e) => {
+    const passwordValue = e.target.value;
+    setPassword(passwordValue);
+    setGeneralErrorMessage("");
+
+    if (passwordValue.length < 6) {
+      setPasswordErrorMessage("Password must be at least 6 characters long.");
+    } else {
+      setPasswordErrorMessage("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,16 +59,13 @@ export default function Login() {
         const data = await response.json();
         const token = data.token;
         if (token) {
-          setTimeout(
-            function () {
-              localStorage.setItem("token", token);
-              router.push("/dashboard");
-            }.bind(this),
-            1500
-          );
+          setTimeout(() => {
+            localStorage.setItem("token", token);
+            router.push("/dashboard");
+          }, 1500);
         } 
       } else {
-        const errorData = response.data;
+        const errorData = await response.json();
         setGeneralErrorMessage(
           errorData.message || "An error occurred. Please try again."
         );
@@ -79,7 +104,7 @@ export default function Login() {
             className="loginField innerShadow"
             type="email"
             value={username}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
             required
           />
           {emailErrorMessage && (
@@ -95,7 +120,7 @@ export default function Login() {
             className="loginField innerShadow"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             required
           />
           {passwordErrorMessage && (
@@ -105,7 +130,6 @@ export default function Login() {
 
         {successMessage && <p className="successMessage">{successMessage}</p>}
         {generalErrorMessage && <p className="errorMessage">{generalErrorMessage}</p>}
-
 
         <button className="loginSubmitButton" type="submit">
           Login
