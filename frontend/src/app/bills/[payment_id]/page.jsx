@@ -1,28 +1,22 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
-interface JwtPayload {
-    username: string;
-    sub: string;
-    exp: number;
-}
 
 const Bills = () => {
     const router = useRouter();
     const { payment_id } = useParams();
-    const [bills, setBills] = useState<any>(null);
-    const [currentUser, setCurrentUser] = useState<any>(null);
-    const [billsNotFound, setBillsNotFound] = useState<boolean>(false);
+    const [bills, setBills] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [billsNotFound, setBillsNotFound] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token || isTokenExpired(token)) { 
-            localStorage.removeItem('token'); 
-            router.push('/login'); 
+        if (!token || isTokenExpired(token)) {
+            localStorage.removeItem('token');
+            router.push('/login');
         } else {
             const fetchBills = async () => {
                 try {
@@ -47,14 +41,14 @@ const Bills = () => {
             }
 
             if (token) {
-                const decodedToken = jwtDecode<JwtPayload>(token);
+                const decodedToken = jwtDecode(token);
                 const email = decodedToken.username;
                 getCurrentUser(email);
             }
         }
     }, [payment_id]);
 
-    const getCurrentUser = async (email: string) => {
+    const getCurrentUser = async (email) => {
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/users?page=1&email=${email}`);
             if (!response.ok) {
@@ -96,15 +90,15 @@ const Bills = () => {
         }
     };
 
-    const isTokenExpired = (token: string) => {
-        const decodedToken = jwtDecode<JwtPayload>(token);
+    const isTokenExpired = (token) => {
+        const decodedToken = jwtDecode(token);
         return decodedToken.exp * 1000 < new Date().getTime();
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 ">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col">
-                {fineNotFound ? (
+                {billsNotFound ? (
                     <div className="text-center">
                         <p className="text-red-500 mb-4">Cette amende n'existe pas</p>
                         <Link href="/" className="mt-6 bg-blue-500 text-white px-4 py-2 rounded text-center">Retour au profil</Link>
@@ -123,10 +117,10 @@ const Bills = () => {
                         <div>
                             <p className="block text-gray-700 mb-2">Prix : {bills.value}</p>
                         </div>
-                        {!bills?.pay && (
+                        {!bills.pay && (
                             <button onClick={handlePayBills} className="mt-6 bg-blue-500 text-white px-4 py-2 rounded">Payer</button>
                         )}
-                        {bills?.pay && (
+                        {bills.pay && (
                             <p className="mt-6 text-green-500">Cette amende a déjà été payée</p>
                         )}
                     </div>

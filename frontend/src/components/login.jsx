@@ -34,7 +34,7 @@ export default function Login() {
           setTimeout(
             function () {
               localStorage.setItem("token", token);
-              router.push("/");
+              router.push("/dashboard");
             }.bind(this),
             1500
           );
